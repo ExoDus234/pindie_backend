@@ -19,6 +19,7 @@ const findCategoryById = async (req, res, next) => {
 const updateCategory = async (req, res, next) => {
     try {
         req.category = await category.findByIdAndUpdate(req.params.id, req.body);
+        next();
     } catch (error) {
         res.setHeader("Content-Type", "application/json");
         res.status(400).send(JSON.stringify({ message: "Категория не обновлена" }));

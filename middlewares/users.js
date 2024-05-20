@@ -30,6 +30,7 @@ const createUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     req.user = await users.findByIdAndUpdated(req.params.id, req.body);
+    next();
   } catch (error) {
     res.setHeader("Content-Type", "application/json");
     res.status(400).send(JSON.stringify({ message: "Пользователь не обновлен" }));
