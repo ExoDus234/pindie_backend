@@ -27,4 +27,13 @@ const createUser = async (req, res, next) => {
   }
 };
 
-module.exports = { findAllUsers, createUser, findUserById };
+const updateUser = async (req, res, next) => {
+  try {
+    req.user = await users.findByIdAndUpdated(req.params.id, req.body);
+  } catch (error) {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Пользователь не обновлен" }));
+  }
+}
+
+module.exports = { findAllUsers, createUser, findUserById, updateUser };

@@ -16,6 +16,15 @@ const findCategoryById = async (req, res, next) => {
     }
 };
 
+const updateCategory = async (req, res, next) => {
+    try {
+        req.category = await category.findCategoryByIdAndUpdate(req.params.id, req.body);
+    } catch (error) {
+        res.setHeader("Content-Type", "application/json");
+        res.status(400).send(JSON.stringify({ message: "Категория не обновлена" }));
+    }
+}
+
 const createCategory = async (req, res, next) => {
     console.log("POST /categories");
     try {
@@ -28,4 +37,4 @@ const createCategory = async (req, res, next) => {
     }
 };
 
-module.exports = { findAllCategories, createCategory, findCategoryById };
+module.exports = { findAllCategories, createCategory, findCategoryById, updateCategory };
