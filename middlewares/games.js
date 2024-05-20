@@ -47,4 +47,53 @@ const deleteGame = async (req, res, next) => {
   }
 }
 
-module.exports = { findAllGames, createGame, findGameById, updateGame, deleteGame };
+const checkEmptyFields = async (req, res, next) => {
+  if (
+    !req.body.title ||
+    !req.body.description ||
+    !req.body.image ||
+    !req.body.link ||
+    !req.body.developer
+  ) {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Заполни все поля" }));
+  } else {
+    next();
+  }
+};
+
+const checkIfCategoriesAvaliable = async (req, res, next) => {
+  if (!req.body.categories || req.body.categories.length === 0) {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Выбери хотя бы одну категорию" }));
+  } else {
+    next();
+  }
+};
+
+// Файл middlewares/games.js
+
+const checkIfUsersAreSafe = async (req, res, next) => {
+  if (!req.body.users) {
+    next();
+    return;
+  }
+  if (req.body.users.length - 1 === req.game.users.length) {
+    next();
+    return;
+  } else {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Нельзя удалять пользователей или добавлять больше одного пользователя" }));
+  }
+};
+
+module.exports = {
+  findAllGames,
+  createGame,
+  findGameById,
+  updateGame,
+  deleteGame,
+  checkEmptyFields,
+  checkIfCategoriesAvaliable,
+  checkIfUsersAreSafe
+};
