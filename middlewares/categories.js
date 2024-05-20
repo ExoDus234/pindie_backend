@@ -60,11 +60,21 @@ const checkIsCategoryExists = async (req, res, next) => {
     }
 };
 
+const checkEmptyName = async (req, res, next) => {
+    if (!req.params.name) {
+        res.setHeader("Content-Type", "application/json");
+        res.status(400).send(JSON.stringify({ message: "Заполни поле названия" }));
+    } else {
+        next();
+    }
+}
+
 module.exports = {
     findAllCategories,
     createCategory,
     findCategoryById,
     updateCategory,
     deleteCategory,
-    checkIsCategoryExists
+    checkIsCategoryExists,
+    checkEmptyName
 };

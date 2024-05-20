@@ -47,10 +47,33 @@ const deleteUser = async (req, res, next) => {
   }
 }
 
+const checkEmptyNameAndEmailAndPassword = async (req, res, next) => {
+  if (!req.params.name ||
+    !req.params.email ||
+    !req.params.password) {
+    res.end("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Заполните все поля" }));
+  } else {
+    next();
+  }
+}
+
+const checkEmptyNameAndEmail = async (req, res, next) => {
+  if (!req.params.name ||
+    !req.params.email) {
+    res.end("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Заполните все поля" }));
+  } else {
+    next();
+  }
+}
+
 module.exports = {
   findAllUsers,
   createUser,
   findUserById,
   updateUser,
-  deleteUser
+  deleteUser,
+  checkEmptyNameAndEmailAndPassword,
+  checkEmptyNameAndEmail
 };
