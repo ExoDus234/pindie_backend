@@ -6,6 +6,6 @@ const { sendAllUsers, sendUserCreated, sendUserById, sendUserUpdated } = require
 usersRouter.get('/users', findAllUsers, sendAllUsers);
 usersRouter.post('/users', findAllUsers, createUser, sendUserCreated);
 usersRouter.get('/users/:id', findUserById, sendUserById);
-usersRouter.put('/users/:id', findUserById, updateUser, sendUserUpdated)
+usersRouter.put('/users/:id', findUserById, updateUser, sendUserUpdated);
 
 module.exports = usersRouter;
