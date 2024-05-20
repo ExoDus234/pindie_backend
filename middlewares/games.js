@@ -55,7 +55,8 @@ const checkEmptyFields = async (req, res, next) => {
     !req.body.link ||
     !req.body.developer
   ) {
-    
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Заполни все поля" }));
   } else {
     next();
   }
@@ -86,11 +87,11 @@ const checkIfUsersAreSafe = async (req, res, next) => {
 
 const checkIsGameExists = async (req, res, next) => {
   const isInArray = req.gamesArray.find((game) => {
-    return req.body.name === game.name;
+    return req.body.title === game.title;
   });
   if (isInArray) {
     res.setHeader("Content-Type", "application/json");
-    res.status(400).send(JSON.stringify({ message: "Игра с таким названием уже существует" }));
+        res.status(400).send(JSON.stringify({ message: "Игра с таким названием уже существует" }));
   } else {
     next();
   }
