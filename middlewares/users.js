@@ -51,7 +51,7 @@ const checkEmptyNameAndEmailAndPassword = async (req, res, next) => {
   if (!req.body.username ||
     !req.body.email ||
     !req.body.password) {
-    res.end("Content-Type", "application/json");
+    res.setHeader("Content-Type", "application/json");
     res.status(400).send(JSON.stringify({ message: "Заполните все поля" }));
   } else {
     next();
@@ -61,7 +61,7 @@ const checkEmptyNameAndEmailAndPassword = async (req, res, next) => {
 const checkEmptyNameAndEmail = async (req, res, next) => {
   if (!req.body.username ||
     !req.body.email) {
-    res.end("Content-Type", "application/json");
+    res.setHeader("Content-Type", "application/json");
     res.status(400).send(JSON.stringify({ message: "Заполните все поля" }));
   } else {
     next();
