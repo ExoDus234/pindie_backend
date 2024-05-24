@@ -1,7 +1,18 @@
 const games = require("../models/game");
 
 const findAllGames = async (req, res, next) => {
-  req.gamesArray = await games.find({}).populate("categories").populate({ path: "users", select: "-password" });
+  if (req.query["categories.name"]) {
+    req.gamesArray = await games.findGameByCategory(req.query["categories.name"]);
+    next();
+    return;
+  }
+  req.gamesArray = await games
+    .find({})
+    .populate("categories")
+    .populate({
+      path: "users",
+      select: "-password"
+    })
   next();
 };
 
@@ -91,7 +102,7 @@ const checkIsGameExists = async (req, res, next) => {
   });
   if (isInArray) {
     res.setHeader("Content-Type", "application/json");
-        res.status(400).send(JSON.stringify({ message: "Игра с таким названием уже существует" }));
+    res.status(400).send(JSON.stringify({ message: "Игра с таким названием уже существует" }));
   } else {
     next();
   }
