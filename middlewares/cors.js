@@ -13,9 +13,7 @@ function cors(req, res, next) {
 const allowedCors = [
     'https://practicum.yandex.ru/',
     'http://practicum.yandex.ru/',
-    "https://spectrefrontend.nomoredomainswork.ru",
-    "http://localhost:3001",
-    "http://localhost:3000",
+    "https://spectrefrontend.nomoredomainswork.ru"
 ];
 
 module.exports = cors;
